@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safety Squad Adventures</title>
+    <style>
+      :root {
+        --primary: #ff6b6b;
+        --secondary: #4ecdc4;
+        --accent: #ffe66d;
+        --dark: #292f36;
+        --light: #f7fff7;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="50" height="50" x="0" y="0" fill="%234ECDC4" opacity="0.3"/><rect width="50" height="50" x="50" y="50" fill="%234ECDC4" opacity="0.3"/></svg>');
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: white;
+        text-shadow: 3px 3px 0 var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .tagline {
+        font-size: 1.5rem;
+        color: var(--accent);
+        text-shadow: 2px 2px 0 var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      .safety-mascot {
+        width: 150px;
+        height: 150px;
+        background-color: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+        border: 5px solid var(--dark);
+        box-shadow: 5px 5px 0 var(--dark);
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        background-color: var(--dark);
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        transition: all 0.3s;
+        font-weight: bold;
+      }
+
+      nav a:hover {
+        background-color: var(--accent);
+        color: var(--dark);
+        transform: scale(1.1);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .section-title {
+        text-align: center;
+        margin: 2rem 0;
+        font-size: 2rem;
+        color: var(--primary);
+        text-shadow: 2px 2px 0 var(--accent);
+      }
+
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .game-card {
+        background-color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 5px 5px 0 var(--dark);
+        transition: all 0.3s;
+        border: 3px solid var(--dark);
+      }
+
+      .game-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 10px 10px 0 var(--dark);
+      }
+
+      .game-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 3px solid var(--dark);
+      }
+
+      .game-card-content {
+        padding: 1.5rem;
+      }
+
+      .game-card h3 {
+        color: var(--secondary);
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 1rem;
+        border: 2px solid var(--dark);
+        box-shadow: 3px 3px 0 var(--dark);
+        transition: all 0.3s;
+      }
+
+      .btn:hover {
+        background-color: var(--secondary);
+        transform: scale(1.05);
+        box-shadow: 5px 5px 0 var(--dark);
+      }
+
+      .quiz-container {
+        background-color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 5px 5px 0 var(--dark);
+        border: 3px solid var(--dark);
+        margin: 2rem 0;
+      }
+
+      .question {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .option {
+        background-color: var(--light);
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid var(--dark);
+      }
+
+      .option:hover {
+        background-color: var(--accent);
+        transform: scale(1.02);
+      }
+
+      .selected {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .correct {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .incorrect {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .result {
+        text-align: center;
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        font-weight: bold;
+      }
+
+      .safety-tip {
+        background-color: var(--accent);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        border: 2px dashed var(--dark);
+        position: relative;
+      }
+
+      .safety-tip:before {
+        content: "⚠️ SAFETY TIP!";
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      footer {
+        background-color: var(--dark);
+        color: white;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* Rescue Ranger Game Styles */
+      #game-scene {
+        width: 100%;
+        height: 400px;
+        background-image: url("https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80");
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+        border: 3px solid var(--dark);
+        border-radius: 10px;
+        margin: 1rem 0;
+      }
+
+      .hazard {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: red;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        transition: all 0.3s;
+        border: 3px solid var(--dark);
+      }
+
+      .hazard:hover {
+        transform: scale(1.2);
+      }
+
+      .hazard.found {
+        background-color: green;
+        animation: celebrate 0.5s;
+      }
+
+      @keyframes celebrate {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      #game-stats {
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0;
+        font-size: 1.2rem;
+      }
+
+      /* Karaoke Styles */
+      #karaoke-player {
+        width: 100%;
+        background-color: var(--secondary);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 1rem 0;
+        border: 3px solid var(--dark);
+      }
+
+      #lyrics {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      #current-line {
+        font-weight: bold;
+        color: var(--accent);
+        text-shadow: 2px 2px 0 var(--dark);
+        margin-bottom: 0.5rem;
+      }
+
+      #next-line {
+        color: var(--light);
+      }
+
+      /* Emergency Simulator Styles */
+      #simulator-scene {
+        width: 100%;
+        min-height: 300px;
+        background-color: var(--light);
+        border: 3px solid var(--dark);
+        border-radius: 10px;
+        padding: 2rem;
+        margin: 1rem 0;
+      }
+
+      #simulator-text {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        min-height: 100px;
+      }
+
+      #simulator-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .simulator-btn {
+        background-color: var(--primary);
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        border: 2px solid var(--dark);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .simulator-btn:hover {
+        background-color: var(--secondary);
+        transform: scale(1.02);
+      }
+
+      /* Scenario Selector Styles */
+      .scenario-selector {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .scenario-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid var(--dark);
+        transition: all 0.3s;
+      }
+
+      .scenario-card:hover {
+        background-color: var(--accent);
+        transform: translateY(-5px);
+      }
+
+      .scenario-card.selected {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .scenario-card h4 {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Science Detective Game Styles */
+      #science-game-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      #tools-container,
+      #descriptions-container {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .science-tool {
+        background-color: white;
+        border: 3px solid var(--dark);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        cursor: grab;
+        text-align: center;
+        transition: all 0.3s;
+        box-shadow: 3px 3px 0 var(--dark);
+      }
+
+      .science-tool:hover {
+        background-color: var(--accent);
+        transform: translateY(-5px);
+      }
+
+      .tool-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .description {
+        background-color: white;
+        border: 3px dashed var(--dark);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+      }
+
+      .description.highlight {
+        background-color: var(--accent);
+      }
+
+      .description.correct {
+        background-color: #a5d6a7;
+        border-style: solid;
+      }
+
+      .description.incorrect {
+        background-color: #ffab91;
+        border-style: solid;
+      }
+
+      #science-feedback {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        min-height: 30px;
+        font-weight: bold;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .games-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .options,
+        #simulator-options {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .tagline {
+          font-size: 1.2rem;
+        }
+
+        .scenario-selector {
+          grid-template-columns: 1fr;
+        }
+
+        #science-game-container {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Safety Squad Adventures</h1>
+      <p class="tagline">Be a Safety Superstar—Before Danger Goes Too Far!</p>
+      <div class="safety-mascot">🦸‍♂️</div>
+    </header>
+
+    <nav>
+      <a href="#games">Games</a>
+      <a href="#quiz">Safety Quiz</a>
+      <a href="#tips">Safety Tips</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <div class="container">
+      <section id="hero" class="hero">
+        <h2>Welcome to Safety Squad Headquarters!</h2>
+        <p>
+          Learn how to stay safe in fun and exciting ways. Play games, take
+          quizzes, and become a safety expert!
+        </p>
+      </section>
+
+      <section id="games">
+        <h2 class="section-title">🚨 Safety Games</h2>
+        <div class="games-grid">
+          <div class="game-card">
+            <img
+              src="Rescue-and-Retrieval-JSEAsy.jpg"
+              alt="Rescue Ranger Game"
+            />
+            <div class="game-card-content">
+              <h3>Rescue Ranger</h3>
+              <p>
+                Spot the hazards before they cause trouble! Can you find all the
+                dangers in this scene?
+              </p>
+              <a href="#rescue-ranger" class="btn">Play Now</a>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <img
+              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Safety Karaoke"
+            />
+            <div class="game-card-content">
+              <h3>Safety Karaoke</h3>
+              <p>
+                Sing along to safety songs and learn important tips while having
+                fun!
+              </p>
+              <a href="#karaoke" class="btn">Sing Along</a>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <img src="images.jpg" alt="Emergency Simulator" />
+            <div class="game-card-content">
+              <h3>Emergency Simulator</h3>
+              <p>
+                Practice what to do in emergencies with this interactive
+                role-play game.
+              </p>
+              <a href="#simulator" class="btn">Start Training</a>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <img
+              src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Science Detective"
+            />
+            <div class="game-card-content">
+              <h3>Science Detective</h3>
+              <p>
+                Solve mysteries using scientific principles! Match the science
+                tools to their uses.
+              </p>
+              <a href="#science-game" class="btn">Play Now</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rescue Ranger Game Section -->
+      <section id="rescue-ranger" class="hidden">
+        <h2 class="section-title">🕵️‍♂️ Rescue Ranger Game</h2>
+        <p>
+          Find all 5 hazards in the picture below. Click on them when you find
+          them!
+        </p>
+
+        <div id="game-stats">
+          <div>Hazards Found: <span id="found-count">0</span>/5</div>
+          <div>Time: <span id="time">0</span>s</div>
+        </div>
+
+        <div id="game-scene">
+          <!-- Hazards will be added by JavaScript -->
+        </div>
+
+        <button id="reset-game" class="btn">Reset Game</button>
+        <a href="#games" class="btn">Back to Games</a>
+      </section>
+
+      <!-- Safety Karaoke Section -->
+      <section id="karaoke" class="hidden">
+        <h2 class="section-title">🎤 Safety Karaoke</h2>
+        <p>
+          Sing along to learn important safety tips! The lyrics will highlight
+          as you go.
+        </p>
+
+        <div id="karaoke-player">
+          <h3>Stop, Drop and Roll (Fire Safety Song)</h3>
+          <div id="lyrics">
+            <div id="current-line">Ready to begin? Press play!</div>
+            <div id="next-line"></div>
+          </div>
+          <button id="play-btn" class="btn">Play Song</button>
+          <button id="pause-btn" class="btn">Pause</button>
+        </div>
+
+        <div class="safety-tip">
+          <p>
+            Remember: If your clothes catch fire, STOP (don't run), DROP (to the
+            ground), and ROLL (to put out the flames)!
+          </p>
+        </div>
+
+        <a href="#games" class="btn">Back to Games</a>
+      </section>
+
+      <!-- Emergency Simulator Section -->
+      <section id="simulator" class="hidden">
+        <h2 class="section-title">🚨 Emergency Simulator</h2>
+        <p>
+          Practice what to do in emergency situations. First choose a scenario,
+          then make choices to see what happens!
+        </p>
+
+        <div class="scenario-selector" id="scenario-selector">
+          <div class="scenario-card" data-scenario="fire">
+            <h4>🔥 Fire Emergency</h4>
+            <p>What to do when there's a fire</p>
+          </div>
+          <div class="scenario-card" data-scenario="stranger">
+            <h4>👤 Stranger Danger</h4>
+            <p>Dealing with strangers</p>
+          </div>
+          <div class="scenario-card" data-scenario="firstaid">
+            <h4>🩹 First Aid</h4>
+            <p>Basic first aid situations</p>
+          </div>
+          <div class="scenario-card" data-scenario="weather">
+            <h4>⛈️ Severe Weather</h4>
+            <p>Staying safe in storms</p>
+          </div>
+        </div>
+
+        <div id="simulator-scene">
+          <div id="simulator-text">
+            <p>Please select a scenario to begin your emergency training.</p>
+          </div>
+          <div id="simulator-options">
+            <!-- Options will be added by JavaScript -->
+          </div>
+        </div>
+
+        <a href="#games" class="btn">Back to Games</a>
+      </section>
+
+      <!-- Science Detective Game Section -->
+      <section id="science-game" class="hidden">
+        <h2 class="section-title">🔬 Science Detective</h2>
+        <p>
+          Match each science tool with its correct use. Drag the tool to the
+          matching description!
+        </p>
+
+        <div id="science-game-container">
+          <div id="tools-container">
+            <div class="science-tool" draggable="true" data-tool="microscope">
+              <div class="tool-icon">🔬</div>
+              <div class="tool-name">Microscope</div>
+            </div>
+            <div class="science-tool" draggable="true" data-tool="thermometer">
+              <div class="tool-icon">🌡️</div>
+              <div class="tool-name">Thermometer</div>
+            </div>
+            <div class="science-tool" draggable="true" data-tool="magnet">
+              <div class="tool-icon">🧲</div>
+              <div class="tool-name">Magnet</div>
+            </div>
+            <div class="science-tool" draggable="true" data-tool="scale">
+              <div class="tool-icon">⚖️</div>
+              <div class="tool-name">Scale</div>
+            </div>
+          </div>
+
+          <div id="descriptions-container">
+            <div class="description" data-tool="thermometer">
+              <p>Measures how hot or cold something is</p>
+            </div>
+
+            <div class="description" data-tool="magnet">
+              <p>Attracts certain metals like iron and nickel</p>
+            </div>
+
+            <div class="description" data-tool="microscope">
+              <p>
+                Used to see very small objects that are invisible to the naked
+                eye
+              </p>
+            </div>
+
+            <div class="description" data-tool="scale">
+              <p>Measures how heavy something is</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="science-feedback"></div>
+        <button id="reset-science-game" class="btn">Reset Game</button>
+        <a href="#games" class="btn">Back to Games</a>
+      </section>
+
+      <!-- Quiz Section -->
+      <section id="quiz">
+        <h2 class="section-title">🧠 Safety Quiz</h2>
+        <p>
+          Test your safety knowledge with this fun quiz! Choose the correct
+          answer for each question.
+        </p>
+
+        <div class="quiz-container">
+          <div id="quiz-progress">Question 1 of 5</div>
+          <div class="question" id="question">
+            What should you do if your clothes catch on fire?
+          </div>
+          <div class="options" id="options">
+            <div class="option" onclick="selectOption(this)">
+              Run as fast as you can
+            </div>
+            <div class="option" onclick="selectOption(this)">
+              Stop, drop, and roll
+            </div>
+            <div class="option" onclick="selectOption(this)">
+              Jump into water
+            </div>
+            <div class="option" onclick="selectOption(this)">
+              Take your clothes off quickly
+            </div>
+          </div>
+          <button id="next-question" class="btn" onclick="nextQuestion()">
+            Next Question
+          </button>
+          <div class="result" id="result"></div>
+        </div>
+      </section>
+
+      <!-- Safety Tips Section -->
+      <section id="tips">
+        <h2 class="section-title">💡 Safety Tips</h2>
+
+        <div class="safety-tip">
+          <p>
+            Always look both ways before crossing the street - left, right, then
+            left again!
+          </p>
+        </div>
+
+        <div class="safety-tip">
+          <p>Never touch electrical outlets with wet hands or metal objects.</p>
+        </div>
+
+        <div class="safety-tip">
+          <p>
+            If there's a fire, crawl low under smoke to breathe cleaner air.
+          </p>
+        </div>
+
+        <div class="safety-tip">
+          <p>Wear a helmet when riding bikes, scooters, or skateboards.</p>
+        </div>
+
+        <div class="safety-tip">
+          <p>Know two ways out of every room in case of emergency.</p>
+        </div>
+
+        <div class="safety-tip">
+          <p>Be aware of your surroundings.</p>
+        </div>
+
+        <div class="safety-tip">
+          <p>
+            Never perform activities that are not authorized by the teacher.
+          </p>
+        </div>
+
+        <div class="safety-tip">
+          <p>Take extra precautions when handling chemicals.</p>
+        </div>
+
+        <div class="safety-tip">
+          <p>Keep correct posture</p>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about">
+        <h2 class="section-title">About Safety Squad</h2>
+        <p>
+          Safety Squad Adventures is a fun way to learn important safety
+          lessons. Our mission is to make safety education engaging and
+          memorable for kids of all ages.
+        </p>
+        <p>
+          Remember: Being safe doesn't have to be boring! Play our games, learn
+          the rules, and become a safety superhero in your home and community.
+        </p>
+      </section>
+    </div>
+
+    <footer>
+      <p>© 2025 Safety Squad Adventures</p>
+      <p>Made with ❤️ for a safer world</p>
+    </footer>
+
+    <script>
+      // Rescue Ranger Game
+      const hazards = [
+        { top: "20%", left: "30%", emoji: "🔥", desc: "Unattended fire" },
+        { top: "60%", left: "70%", emoji: "💧", desc: "Slippery floor" },
+        { top: "40%", left: "15%", emoji: "🔌", desc: "Exposed wires" },
+        {
+          top: "10%",
+          left: "80%",
+          emoji: "🧪",
+          desc: "Chemicals within reach",
+        },
+        {
+          top: "75%",
+          left: "40%",
+          emoji: "🔪",
+          desc: "Sharp objects left out",
+        },
+      ];
+
+      let foundHazards = 0;
+      let startTime = 0;
+      let timerInterval;
+
+      function setupGame() {
+        const gameScene = document.getElementById("game-scene");
+        gameScene.innerHTML = "";
+
+        hazards.forEach((hazard, index) => {
+          const hazardElement = document.createElement("div");
+          hazardElement.className = "hazard";
+          hazardElement.style.top = hazard.top;
+          hazardElement.style.left = hazard.left;
+          hazardElement.innerHTML = hazard.emoji;
+          hazardElement.title = hazard.desc;
+
+          hazardElement.addEventListener("click", () => {
+            if (!hazardElement.classList.contains("found")) {
+              hazardElement.classList.add("found");
+              foundHazards++;
+              document.getElementById("found-count").textContent = foundHazards;
+
+              if (foundHazards === hazards.length) {
+                clearInterval(timerInterval);
+                const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+                alert(
+                  `Congratulations! You found all hazards in ${timeTaken} seconds!`
+                );
+              }
+            }
+          });
+
+          gameScene.appendChild(hazardElement);
+        });
+
+        foundHazards = 0;
+        document.getElementById("found-count").textContent = foundHazards;
+        startTime = Date.now();
+
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          const currentTime = Math.floor((Date.now() - startTime) / 1000);
+          document.getElementById("time").textContent = currentTime;
+        }, 1000);
+      }
+
+      // Safety Karaoke Game
+      const karaokeLyrics = [
+        {
+          line: "If you see some smoke or fire",
+          next: "Don't panic, don't you run",
+        },
+        {
+          line: "Don't panic, don't you run",
+          next: "Find an adult, tell someone",
+        },
+        {
+          line: "Find an adult, tell someone",
+          next: "If your clothes catch fire",
+        },
+        { line: "If your clothes catch fire", next: "Here's what you must do" },
+        { line: "Here's what you must do", next: "STOP! (stop where you are)" },
+        {
+          line: "STOP! (stop where you are)",
+          next: "DROP! (fall to the ground)",
+        },
+        {
+          line: "DROP! (fall to the ground)",
+          next: "ROLL! (roll around and around)",
+        },
+        {
+          line: "ROLL! (roll around and around)",
+          next: "Until the flames are out",
+        },
+        {
+          line: "Until the flames are out",
+          next: "That's what safety's all about!",
+        },
+      ];
+
+      let currentLine = 0;
+      let karaokeInterval;
+
+      function startKaraoke() {
+        document.getElementById("play-btn").disabled = true;
+        currentLine = 0;
+        updateKaraokeLine();
+
+        karaokeInterval = setInterval(() => {
+          currentLine++;
+          if (currentLine >= karaokeLyrics.length) {
+            clearInterval(karaokeInterval);
+            document.getElementById("current-line").textContent =
+              "Song finished! Great job!";
+            document.getElementById("next-line").textContent = "";
+            document.getElementById("play-btn").disabled = false;
+            return;
+          }
+          updateKaraokeLine();
+        }, 3000);
+      }
+
+      function updateKaraokeLine() {
+        document.getElementById("current-line").textContent =
+          karaokeLyrics[currentLine].line;
+        document.getElementById("next-line").textContent =
+          karaokeLyrics[currentLine].next;
+      }
+
+      function pauseKaraoke() {
+        clearInterval(karaokeInterval);
+        document.getElementById("play-btn").disabled = false;
+      }
+
+      // Emergency Simulator Game
+      const simulatorScenarios = {
+        fire: {
+          start: {
+            text: "You're home alone when you smell smoke coming from the kitchen. What do you do?",
+            options: [
+              { text: "Go check the kitchen", next: "investigate" },
+              { text: "Get outside immediately", next: "outside" },
+            ],
+          },
+          investigate: {
+            text: "You go to the kitchen and see flames on the stove! The fire is spreading quickly. What do you do?",
+            options: [
+              { text: "Try to put it out with water", next: "water" },
+              { text: "Leave immediately and call 911", next: "leave" },
+            ],
+          },
+          outside: {
+            text: "You get outside safely and call 911 from your neighbor's house. Great job! This is the safest choice when you smell smoke.",
+            options: [{ text: "Play again", next: "start" }],
+          },
+          water: {
+            text: "Oh no! Pouring water on a grease fire makes it worse! The fire spreads quickly. You should have left immediately.",
+            options: [{ text: "Try again", next: "start" }],
+          },
+          leave: {
+            text: "Good choice! You get outside safely and call 911. Firefighters arrive quickly to put out the fire.",
+            options: [{ text: "Play again", next: "start" }],
+          },
+        },
+        stranger: {
+          start: {
+            text: "You're walking home from school when a stranger in a car pulls up and says your parent sent them to pick you up. What do you do?",
+            options: [
+              { text: "Get in the car", next: "getincar" },
+              { text: "Say no and walk away quickly", next: "walkaway" },
+            ],
+          },
+          getincar: {
+            text: "Oh no! This was a dangerous choice. Never get in a car with someone you don't know, even if they say they know your parents.",
+            options: [{ text: "Try again", next: "start" }],
+          },
+          walkaway: {
+            text: "Good choice! You walk quickly to a nearby store and tell the staff what happened. They call your parents and the police. Always trust your instincts with strangers!",
+            options: [{ text: "Play again", next: "start" }],
+          },
+        },
+        firstaid: {
+          start: {
+            text: "Your friend falls off their bike and scrapes their knee badly. It's bleeding. What should you do first?",
+            options: [
+              { text: "Put ice directly on the wound", next: "ice" },
+              { text: "Wash it with clean water", next: "wash" },
+              { text: "Put a bandage on immediately", next: "bandage" },
+            ],
+          },
+          ice: {
+            text: "Not the best choice. Ice can damage the skin if applied directly to an open wound. You should clean it first.",
+            options: [{ text: "Try again", next: "start" }],
+          },
+          wash: {
+            text: "Correct! First you should gently clean the wound with clean water to remove dirt and debris. Then you can apply a bandage.",
+            options: [{ text: "Play again", next: "start" }],
+          },
+          bandage: {
+            text: "Not the best first step. You should clean the wound first before covering it to prevent infection.",
+            options: [{ text: "Try again", next: "start" }],
+          },
+        },
+        weather: {
+          start: {
+            text: "You're playing outside when you hear thunder in the distance. What should you do?",
+            options: [
+              { text: "Keep playing until it rains", next: "keepPlaying" },
+              { text: "Go inside immediately", next: "goInside" },
+              { text: "Hide under a tree", next: "tree" },
+            ],
+          },
+          keepPlaying: {
+            text: "Dangerous choice! Lightning can strike before the rain starts. You should go inside as soon as you hear thunder.",
+            options: [{ text: "Try again", next: "start" }],
+          },
+          goInside: {
+            text: "Great choice! When thunder roars, go indoors. Stay inside for 30 minutes after the last thunderclap.",
+            options: [{ text: "Play again", next: "start" }],
+          },
+          tree: {
+            text: "Not safe! Trees can attract lightning. You should go inside a sturdy building or get in a car if you can't get to a building.",
+            options: [{ text: "Try again", next: "start" }],
+          },
+        },
+      };
+
+      let currentScenario = null;
+
+      function selectScenario(scenario) {
+        currentScenario = scenario;
+        document.querySelectorAll(".scenario-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+        document
+          .querySelector(`.scenario-card[data-scenario="${scenario}"]`)
+          .classList.add("selected");
+        updateSimulator("start");
+      }
+
+      function updateSimulator(scenarioStep) {
+        if (!currentScenario) return;
+
+        const scene = simulatorScenarios[currentScenario][scenarioStep];
+        document.getElementById(
+          "simulator-text"
+        ).innerHTML = `<p>${scene.text}</p>`;
+
+        const optionsContainer = document.getElementById("simulator-options");
+        optionsContainer.innerHTML = "";
+
+        scene.options.forEach((option) => {
+          const btn = document.createElement("div");
+          btn.className = "simulator-btn";
+          btn.textContent = option.text;
+          btn.dataset.next = option.next;
+          btn.addEventListener("click", () => updateSimulator(option.next));
+          optionsContainer.appendChild(btn);
+        });
+      }
+
+      // Science Detective Game
+      function setupScienceGame() {
+        const tools = document.querySelectorAll(".science-tool");
+        const descriptions = document.querySelectorAll(".description");
+        const feedback = document.getElementById("science-feedback");
+
+        let draggedTool = null;
+        let correctMatches = 0;
+
+        tools.forEach((tool) => {
+          tool.addEventListener("dragstart", function () {
+            draggedTool = this;
+            setTimeout(() => {
+              this.style.opacity = "0.4";
+            }, 0);
+          });
+
+          tool.addEventListener("dragend", function () {
+            this.style.opacity = "1";
+          });
+        });
+
+        descriptions.forEach((desc) => {
+          desc.addEventListener("dragover", function (e) {
+            e.preventDefault();
+            this.classList.add("highlight");
+          });
+
+          desc.addEventListener("dragleave", function () {
+            this.classList.remove("highlight");
+          });
+
+          desc.addEventListener("drop", function (e) {
+            e.preventDefault();
+            this.classList.remove("highlight");
+
+            if (draggedTool && draggedTool.dataset.tool === this.dataset.tool) {
+              this.classList.add("correct");
+              draggedTool.style.visibility = "hidden";
+              feedback.textContent = "Correct! Great job!";
+              feedback.style.color = "#2e7d32";
+              correctMatches++;
+
+              if (correctMatches === tools.length) {
+                feedback.textContent =
+                  "Congratulations! You matched all the science tools correctly! 🎉";
+              }
+            } else {
+              this.classList.add("incorrect");
+              feedback.textContent = "Oops! Try again.";
+              feedback.style.color = "#c62828";
+              setTimeout(() => {
+                this.classList.remove("incorrect");
+              }, 1000);
+            }
+          });
+        });
+
+        document
+          .getElementById("reset-science-game")
+          .addEventListener("click", function () {
+            tools.forEach((tool) => {
+              tool.style.visibility = "visible";
+            });
+            descriptions.forEach((desc) => {
+              desc.classList.remove("correct", "incorrect", "highlight");
+            });
+            feedback.textContent = "";
+            correctMatches = 0;
+          });
+      }
+
+      // Navigation between sections
+      document.querySelectorAll("nav a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          showSection(targetId);
+        });
+      });
+
+      document.querySelectorAll(".game-card a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          showSection(targetId);
+
+          if (targetId === "#rescue-ranger") {
+            setupGame();
+          } else if (targetId === "#simulator") {
+            currentScenario = null;
+            document.getElementById("simulator-text").innerHTML =
+              "<p>Please select a scenario to begin your emergency training.</p>";
+            document.getElementById("simulator-options").innerHTML = "";
+            document.querySelectorAll(".scenario-card").forEach((card) => {
+              card.classList.remove("selected");
+            });
+          } else if (targetId === "#science-game") {
+            setupScienceGame();
+          }
+        });
+      });
+
+      // Scenario selection
+      document.querySelectorAll(".scenario-card").forEach((card) => {
+        card.addEventListener("click", function () {
+          const scenario = this.getAttribute("data-scenario");
+          selectScenario(scenario);
+        });
+      });
+
+      function showSection(sectionId) {
+        document.querySelectorAll("section").forEach((section) => {
+          section.classList.add("hidden");
+        });
+
+        document.querySelector(sectionId).classList.remove("hidden");
+        window.scrollTo(0, 0);
+      }
+
+      // Event Listeners
+      document
+        .getElementById("reset-game")
+        .addEventListener("click", setupGame);
+      document
+        .getElementById("play-btn")
+        .addEventListener("click", startKaraoke);
+      document
+        .getElementById("pause-btn")
+        .addEventListener("click", pauseKaraoke);
+
+      // Safety Quiz
+      const questions = [
+        {
+          question: "What should you do if your clothes catch on fire?",
+          options: [
+            "Run as fast as you can",
+            "Stop, drop, and roll",
+            "Jump into water",
+            "Take your clothes off quickly",
+          ],
+          answer: 1,
+        },
+        {
+          question: "What number should you call in an emergency?",
+          options: ["911", "411", "311", "111"],
+          answer: 0,
+        },
+        {
+          question: "What should you do if you find a gun?",
+          options: [
+            "Pick it up carefully",
+            "Tell an adult immediately",
+            "Hide it somewhere safe",
+            "Play with it carefully",
+          ],
+          answer: 1,
+        },
+        {
+          question: "How should you cross the street safely?",
+          options: [
+            "Run across quickly",
+            "Walk slowly while looking at your phone",
+            "Look both ways and use a crosswalk",
+            "Follow someone else crossing",
+          ],
+          answer: 2,
+        },
+        {
+          question: "What should you do during a tornado warning?",
+          options: [
+            "Go outside to watch",
+            "Go to a basement or interior room",
+            "Stand near windows to see better",
+            "Drive away quickly",
+          ],
+          answer: 1,
+        },
+      ];
+
+      let currentQuestion = 0;
+      let selectedOption = null;
+      let score = 0;
+
+      function loadQuestion() {
+        const q = questions[currentQuestion];
+        document.getElementById("question").textContent = q.question;
+        document.getElementById("quiz-progress").textContent = `Question ${
+          currentQuestion + 1
+        } of ${questions.length}`;
+
+        const optionsContainer = document.getElementById("options");
+        optionsContainer.innerHTML = "";
+
+        q.options.forEach((option, index) => {
+          const optionElement = document.createElement("div");
+          optionElement.className = "option";
+          optionElement.textContent = option;
+          optionElement.onclick = function () {
+            selectOption(this, index);
+          };
+          optionsContainer.appendChild(optionElement);
+        });
+
+        document.getElementById("result").textContent = "";
+        document.getElementById("next-question").textContent =
+          currentQuestion === questions.length - 1
+            ? "See Results"
+            : "Next Question";
+        selectedOption = null;
+      }
+
+      function selectOption(element, index) {
+        document.querySelectorAll(".option").forEach((opt) => {
+          opt.classList.remove("selected");
+        });
+
+        element.classList.add("selected");
+        selectedOption = index;
+      }
+
+      function nextQuestion() {
+        if (selectedOption === null) {
+          alert("Please select an answer!");
+          return;
+        }
+
+        const q = questions[currentQuestion];
+        const options = document.querySelectorAll(".option");
+
+        options.forEach((opt, index) => {
+          opt.classList.remove("correct", "incorrect");
+          if (index === q.answer) {
+            opt.classList.add("correct");
+          } else if (index === selectedOption && index !== q.answer) {
+            opt.classList.add("incorrect");
+          }
+        });
+
+        if (selectedOption === q.answer) {
+          score++;
+        }
+
+        if (currentQuestion < questions.length - 1) {
+          currentQuestion++;
+          setTimeout(loadQuestion, 1500);
+        } else {
+          showResults();
+        }
+      }
+
+      function showResults() {
+        document.getElementById("quiz-progress").textContent = "";
+        document.getElementById("question").textContent = "Quiz Completed!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("next-question").style.display = "none";
+
+        const result = document.getElementById("result");
+        result.textContent = `You scored ${score} out of ${questions.length}!`;
+
+        if (score === questions.length) {
+          result.textContent += " 🎉 Perfect! You're a safety expert!";
+        } else if (score >= questions.length / 2) {
+          result.textContent += " 👍 Good job! Keep learning!";
+        } else {
+          result.textContent += " 🤔 Review the safety tips and try again!";
+        }
+
+        const restartBtn = document.createElement("button");
+        restartBtn.className = "btn";
+        restartBtn.textContent = "Restart Quiz";
+        restartBtn.onclick = function () {
+          currentQuestion = 0;
+          score = 0;
+          loadQuestion();
+          document.getElementById("next-question").style.display =
+            "inline-block";
+        };
+
+        document.getElementById("quiz-container").appendChild(restartBtn);
+      }
+
+      // Initialize
+      loadQuestion();
+      showSection("#hero");
+    </script>
+  </body>
+</html>
