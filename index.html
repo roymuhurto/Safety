@@ -69,7 +69,7 @@
       .loading-text {
         font-size: 6vw;
         font-weight: bold;
-        color: #ff6600;
+        color: blue;
         animation: bounce 1s infinite;
       }
 
@@ -84,7 +84,7 @@
       }
 
       h1 {
-        color: #ff6600;
+        color: blue;
         font-family: "Fredoka One", cursive;
         font-size: clamp(3rem, 4vw, 2.5rem);
         letter-spacing: 1.5px;
@@ -93,7 +93,7 @@
       }
 
       h2 {
-        color: #ff6600;
+        color: blue;
         font-family: "Fredoka One", cursive;
         font-size: clamp(1.5rem, 4vw, 2.5rem);
         letter-spacing: 1px;
@@ -159,12 +159,13 @@
       }
 
       .card {
-        background: linear-gradient(145deg, #fefcea, #f1daae);
+        background: rgb(255, 255, 188);
         border-radius: 20px;
         padding: 20px;
         margin: 20px auto;
         max-width: 490px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border: 2px solid orange;
       }
 
       #tableOutput {
@@ -260,7 +261,7 @@
         padding: 10px;
         background-color: #fff;
         border-radius: 10px;
-        border: 2px solid #5170ff;
+        border: 2px solid orange;
       }
 
       .equipment-icon {
@@ -384,14 +385,8 @@
     </div>
 
     <!-- 🔊 Sound Effects -->
-    <audio
-      id="correctSound"
-      src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"
-    ></audio>
-    <audio
-      id="wrongSound"
-      src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"
-    ></audio>
+    <audio id="correctSound" src="correct-6033 - Copy.mp3"></audio>
+    <audio id="wrongSound" src="wrong-47985 - Copy.mp3"></audio>
 
     <script>
       function showScreen(id) {
@@ -515,7 +510,11 @@
         { name: "Lab Coat", icon: "🥼", purpose: "Protect skin and clothing" },
         { name: "Gloves", icon: "🧤", purpose: "Hand protection" },
         { name: "Beaker", icon: "🧪", purpose: "Mixing and heating liquids" },
-        { name: "Test Tube", icon: "试管", purpose: "Holding small samples" },
+        {
+          name: "Test Tube",
+          icon: "⚗️",
+          purpose: "distill, or separate and purify, substances",
+        },
         { name: "Bunsen Burner", icon: "🔥", purpose: "Heating substances" },
         { name: "Microscope", icon: "🔬", purpose: "Viewing small objects" },
         {
