@@ -129,6 +129,12 @@
         background-color: #3a5bd9;
       }
 
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
       input,
       select {
         font-size: 1rem;
@@ -262,6 +268,7 @@
         background-color: #fff;
         border-radius: 10px;
         border: 2px solid orange;
+        cursor: pointer;
       }
 
       .equipment-icon {
@@ -304,9 +311,6 @@
       <button onclick="showScreen('emergencyScreen')">
         <i class="fas fa-first-aid"></i> Emergency Procedures
       </button>
-      <button onclick="showScreen('matchingScreen')">
-        <i class="fas fa-puzzle-piece"></i> Safety Matching
-      </button>
       <button onclick="showScreen('whsScreen')">
         <i class="fas fa-exclamation-triangle"></i> Hazard Symbols
       </button>
@@ -318,7 +322,9 @@
         <div id="quizQ"></div>
         <div id="quizOptions"></div>
         <div id="quizFeedback" class="feedback"></div>
-        <button onclick="nextQuizQuestion()">Next Question</button>
+        <button id="quizNextBtn" onclick="nextQuizQuestion()" disabled>
+          Next Question
+        </button>
       </div>
     </div>
 
@@ -337,7 +343,9 @@
         <div class="scenario-image" id="scenarioImage">Scenario Image</div>
         <div id="scenarioOptions"></div>
         <div id="scenarioFeedback" class="feedback"></div>
-        <button onclick="nextScenario()">Next Scenario</button>
+        <button id="scenarioNextBtn" onclick="nextScenario()" disabled>
+          Next Scenario
+        </button>
       </div>
     </div>
 
@@ -360,17 +368,9 @@
         <div id="emergencyQuestion"></div>
         <div id="emergencyOptions"></div>
         <div id="emergencyFeedback" class="feedback"></div>
-        <button onclick="nextEmergency()">Next Situation</button>
-      </div>
-    </div>
-
-    <div id="matchingScreen" class="screen fade-in">
-      <div class="card">
-        <h2>Safety Matching</h2>
-        <div id="matchingQuestion"></div>
-        <div id="matchingOptions"></div>
-        <div id="matchingFeedback" class="feedback"></div>
-        <button onclick="nextMatching()">Next Matching</button>
+        <button id="emergencyNextBtn" onclick="nextEmergency()" disabled>
+          Next Situation
+        </button>
       </div>
     </div>
 
@@ -380,7 +380,9 @@
         <div id="symbolImage" class="scenario-image">Hazard Symbol</div>
         <div id="symbolOptions"></div>
         <div id="symbolFeedback" class="feedback"></div>
-        <button onclick="nextSymbol()">Next Symbol</button>
+        <button id="symbolNextBtn" onclick="nextSymbol()" disabled>
+          Next Symbol
+        </button>
       </div>
     </div>
 
@@ -389,11 +391,29 @@
     <audio id="wrongSound" src="wrong-47985 - Copy.mp3"></audio>
 
     <script>
+      // Global variables to track if an answer has been selected
+      let quizAnswered = false;
+      let scenarioAnswered = false;
+      let emergencyAnswered = false;
+      let symbolAnswered = false;
+
       function showScreen(id) {
         document
           .querySelectorAll(".screen")
           .forEach((s) => s.classList.remove("active"));
         document.getElementById(id).classList.add("active");
+
+        // Reset answer tracking when switching screens
+        quizAnswered = false;
+        scenarioAnswered = false;
+        emergencyAnswered = false;
+        symbolAnswered = false;
+
+        // Update next button states
+        document.getElementById("quizNextBtn").disabled = true;
+        document.getElementById("scenarioNextBtn").disabled = true;
+        document.getElementById("emergencyNextBtn").disabled = true;
+        document.getElementById("symbolNextBtn").disabled = true;
 
         // Initialize the screen if needed
         if (id === "quizScreen") showQuizQuestion();
@@ -476,6 +496,10 @@
         document.getElementById("quizOptions").innerHTML = optionsHTML;
         document.getElementById("quizFeedback").textContent = "";
         document.getElementById("quizFeedback").className = "feedback";
+
+        // Reset answer tracking
+        quizAnswered = false;
+        document.getElementById("quizNextBtn").disabled = true;
       }
 
       function checkQuizAnswer(selectedIndex) {
@@ -497,6 +521,10 @@
             "feedback incorrect";
           wrongSound.play();
         }
+
+        // Enable the next button
+        quizAnswered = true;
+        document.getElementById("quizNextBtn").disabled = false;
       }
 
       function nextQuizQuestion() {
@@ -596,6 +624,10 @@
         document.getElementById("scenarioOptions").innerHTML = optionsHTML;
         document.getElementById("scenarioFeedback").textContent = "";
         document.getElementById("scenarioFeedback").className = "feedback";
+
+        // Reset answer tracking
+        scenarioAnswered = false;
+        document.getElementById("scenarioNextBtn").disabled = true;
       }
 
       function checkScenarioAnswer(selectedIndex) {
@@ -617,6 +649,10 @@
             "feedback incorrect";
           wrongSound.play();
         }
+
+        // Enable the next button
+        scenarioAnswered = true;
+        document.getElementById("scenarioNextBtn").disabled = false;
       }
 
       function nextScenario() {
@@ -698,6 +734,10 @@
         document.getElementById("emergencyOptions").innerHTML = optionsHTML;
         document.getElementById("emergencyFeedback").textContent = "";
         document.getElementById("emergencyFeedback").className = "feedback";
+
+        // Reset answer tracking
+        emergencyAnswered = false;
+        document.getElementById("emergencyNextBtn").disabled = true;
       }
 
       function checkEmergencyAnswer(selectedIndex) {
@@ -719,6 +759,10 @@
             "feedback incorrect";
           wrongSound.play();
         }
+
+        // Enable the next button
+        emergencyAnswered = true;
+        document.getElementById("emergencyNextBtn").disabled = false;
       }
 
       function nextEmergency() {
@@ -769,6 +813,9 @@
         document.getElementById("matchingFeedback").textContent =
           "Match the items correctly!";
         document.getElementById("matchingFeedback").className = "feedback";
+
+        // For matching, we'll enable the next button immediately since it's informational
+        document.getElementById("matchingNextBtn").disabled = false;
       }
 
       function nextMatching() {
@@ -830,6 +877,10 @@
         document.getElementById("symbolOptions").innerHTML = optionsHTML;
         document.getElementById("symbolFeedback").textContent = "";
         document.getElementById("symbolFeedback").className = "feedback";
+
+        // Reset answer tracking
+        symbolAnswered = false;
+        document.getElementById("symbolNextBtn").disabled = true;
       }
 
       function checkSymbolAnswer(selectedIndex) {
@@ -851,6 +902,10 @@
             "feedback incorrect";
           wrongSound.play();
         }
+
+        // Enable the next button
+        symbolAnswered = true;
+        document.getElementById("symbolNextBtn").disabled = false;
       }
 
       function nextSymbol() {
