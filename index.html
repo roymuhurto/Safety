@@ -398,9 +398,6 @@
       <button onclick="showScreen('emergencyScreen')">
         <i class="fas fa-first-aid"></i> Emergency Procedures
       </button>
-      <button onclick="showScreen('matchingScreen')">
-        <i class="fas fa-puzzle-piece"></i> Safety Matching
-      </button>
       <button onclick="showScreen('whsScreen')">
         <i class="fas fa-exclamation-triangle"></i> Hazard Symbols
       </button>
@@ -463,18 +460,6 @@
         <div id="emergencyFeedback" class="feedback"></div>
         <button id="emergencyNextBtn" onclick="nextEmergency()" disabled>
           Next Situation
-        </button>
-      </div>
-    </div>
-
-    <div id="matchingScreen" class="screen fade-in">
-      <div class="card">
-        <h2>Safety Matching</h2>
-        <div id="matchingQuestion"></div>
-        <div id="matchingOptions"></div>
-        <div id="matchingFeedback" class="feedback"></div>
-        <button id="matchingNextBtn" onclick="nextMatching()" disabled>
-          Next Matching
         </button>
       </div>
     </div>
