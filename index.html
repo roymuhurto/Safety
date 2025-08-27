@@ -364,6 +364,28 @@
         color: #c62828;
         margin: 10px 0;
       }
+
+      #megaMathButton {
+        background-color: #fff8bd;
+        color: rgb(0, 0, 0);
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 10px;
+        padding: 12px 25px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        width: 90%;
+        max-width: 300px;
+        font-weight: bold;
+      }
+
+      #megaMathButton:hover {
+        background-color: #d1cb99;
+      }
     </style>
   </head>
   <body>
@@ -377,9 +399,12 @@
     </div>
 
     <h1>Science Safety Adventure</h1>
-    <a onclick="window.open('https://math-fun-muhurto.vercel.app', '_blank')">
-      🚀 Open Mega Math Challange
-    </a>
+    <button
+      id="megaMathButton"
+      onclick="window.open('https://math-fun-muhurto.vercel.app', '_blank')"
+    >
+      🚀 Open Mega Math Challenge
+    </button>
 
     <br /><br /><br />
     <div class="menu-container">
@@ -422,7 +447,6 @@
       <div class="card">
         <h2>Lab Equipment</h2>
         <div id="equipmentList"></div>
-        <button onclick="showEquipment()">Show Equipment</button>
       </div>
     </div>
 
