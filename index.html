@@ -173,6 +173,7 @@
         max-width: 490px;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         border: 2px solid orange;
+        height: 755px;
       }
 
       #tableOutput {
@@ -423,6 +424,35 @@
       #megaMathButton:hover {
         background-color: #d1cb99;
       }
+
+      /* NEW STYLES FOR SAFETY RULES WITH IMAGES */
+      .safety-rule {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 2px solid orange;
+      }
+
+      .rule-icon {
+        font-size: 32px;
+        margin-right: 15px;
+        min-width: 50px;
+        text-align: center;
+      }
+
+      .rule-text {
+        text-align: left;
+        flex: 1;
+      }
+
+      .rules-container {
+        max-height: 600px;
+        overflow-y: auto;
+        padding: 10px;
+      }
     </style>
   </head>
   <body>
@@ -503,12 +533,8 @@
     <div id="rulesScreen" class="screen fade-in">
       <div class="card">
         <h2>Science Safety Rules</h2>
-        <div class="scientist-container">
-          <div class="scientist-box-text">
-            <table class="safety-table">
-              <tbody id="rulesList"></tbody>
-            </table>
-          </div>
+        <div class="rules-container" id="rulesList">
+          <!-- Rules will be populated by JavaScript -->
         </div>
       </div>
     </div>
@@ -542,9 +568,7 @@
       <div class="card">
         <h2>Chemical Mixing Safety</h2>
         <div class="chemical-game">
-          <p class="chemical-instructions">
-            Select two chemicals to mix and observe the reaction!
-          </p>
+          <p class="chemical-instructions">Select two chemicals to mix!</p>
 
           <div class="chemicals-container">
             <div
@@ -621,13 +645,6 @@
             <div class="reaction-icon">⚗️</div>
             <div>Reaction result will appear here</div>
           </div>
-
-          <div class="chemical-warning">
-            ⚠️ Never mix chemicals without proper knowledge, supervision, and
-            safety equipment! Always consult MSDS (Material Safety Data Sheets)
-            before working with chemicals.
-          </div>
-
           <button onclick="resetMixing()">Reset Experiment</button>
         </div>
       </div>
@@ -1042,23 +1059,30 @@
         showScenario();
       }
 
-      // Safety Rules
+      // Safety Rules with Images
       const safetyRules = [
-        "Always wear safety goggles",
-        "Tie back long hair",
-        "No eating or drinking in lab",
-        "Know emergency procedures",
-        "Report accidents immediately",
-        "Wear appropriate clothing",
-        "Never work alone",
-        "Label all containers",
-        "Dispose of waste properly",
+        { rule: "Always wear safety goggles", icon: "🥽", color: "#5170ff" },
+        { rule: "Tie back long hair", icon: "👩‍🦰", color: "#ff6600" },
+        { rule: "No eating or drinking in lab", icon: "🚫", color: "#c62828" },
+        { rule: "Know emergency procedures", icon: "📋", color: "#2e7d32" },
+        { rule: "Report accidents immediately", icon: "⚠️", color: "#ff9900" },
+        { rule: "Wear appropriate clothing", icon: "👕", color: "#9c27b0" },
+        { rule: "Never work alone", icon: "👥", color: "#1565c0" },
+        { rule: "Label all containers", icon: "🏷️", color: "#00796b" },
+        { rule: "Dispose of waste properly", icon: "🗑️", color: "#795548" },
       ];
 
       function showRules() {
         let rulesHTML = "";
-        safetyRules.forEach((rule, index) => {
-          rulesHTML += `<tr><td>${index + 1}.</td><td>${rule}</td></tr>`;
+        safetyRules.forEach((ruleObj, index) => {
+          rulesHTML += `
+            <div class="safety-rule">
+              <div class="rule-icon" style="color: ${ruleObj.color}">${
+            ruleObj.icon
+          }</div>
+              <div class="rule-text">${index + 1}. ${ruleObj.rule}</div>
+            </div>
+          `;
         });
 
         document.getElementById("rulesList").innerHTML = rulesHTML;
