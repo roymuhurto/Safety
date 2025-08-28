@@ -280,7 +280,7 @@
         text-align: center;
       }
 
-      /* Chemical Mixing Game Styles */
+      /* Chemical Mixing Game Styles - Enhanced */
       .chemical-game {
         display: flex;
         flex-direction: column;
@@ -291,46 +291,65 @@
       .chemicals-container {
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 15px;
         flex-wrap: wrap;
+        max-width: 600px;
       }
 
       .chemical-item {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: transform 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s;
         border: 3px solid #333;
+        font-size: 12px;
+        text-align: center;
+        padding: 5px;
+        box-sizing: border-box;
       }
 
       .chemical-item:hover {
         transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .chemical-item.selected {
+        border: 3px solid #ff6600;
+        box-shadow: 0 0 10px #ff6600;
       }
 
       .mixing-area {
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 100px;
         border: 3px dashed #ff6600;
         border-radius: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 24px;
+        font-size: 18px;
         margin: 15px 0;
         background-color: #f9f9f9;
+        padding: 10px;
+        text-align: center;
       }
 
       .reaction-result {
-        min-height: 100px;
+        min-height: 120px;
         padding: 15px;
         border-radius: 10px;
         background-color: #fff;
         margin: 15px 0;
         border: 2px solid #5170ff;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
 
       .reaction-safe {
@@ -349,22 +368,38 @@
         animation: pulse 0.5s infinite;
       }
 
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
+      .reaction-fizz {
+        background-color: #bbdefb;
+        color: #1565c0;
       }
 
       .chemical-warning {
         font-weight: bold;
         color: #c62828;
         margin: 10px 0;
+        text-align: center;
+        max-width: 500px;
+      }
+
+      .chemical-instructions {
+        text-align: center;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .reaction-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
       }
 
       #megaMathButton {
@@ -507,49 +542,90 @@
       <div class="card">
         <h2>Chemical Mixing Safety</h2>
         <div class="chemical-game">
-          <p>Select two chemicals to mix and see what happens!</p>
+          <p class="chemical-instructions">
+            Select two chemicals to mix and observe the reaction!
+          </p>
+
           <div class="chemicals-container">
             <div
               class="chemical-item"
               style="background-color: #ff9999"
               onclick="selectChemical('acid')"
             >
-              🧪<br />Acid
+              <div>🧪</div>
+              <div>Acid</div>
             </div>
             <div
               class="chemical-item"
               style="background-color: #9999ff"
               onclick="selectChemical('base')"
             >
-              🧪<br />Base
+              <div>🧪</div>
+              <div>Base</div>
             </div>
             <div
               class="chemical-item"
               style="background-color: #ffff99"
               onclick="selectChemical('oxidizer')"
             >
-              🧪<br />Oxidizer
+              <div>🧪</div>
+              <div>Oxidizer</div>
             </div>
             <div
               class="chemical-item"
               style="background-color: #99ff99"
               onclick="selectChemical('water')"
             >
-              💧<br />Water
+              <div>💧</div>
+              <div>Water</div>
+            </div>
+            <div
+              class="chemical-item"
+              style="background-color: #ffcc99"
+              onclick="selectChemical('organic')"
+            >
+              <div>🪔</div>
+              <div>Organic Solvent</div>
+            </div>
+            <div
+              class="chemical-item"
+              style="background-color: #ff99cc"
+              onclick="selectChemical('metal')"
+            >
+              <div>⚙️</div>
+              <div>Reactive Metal</div>
+            </div>
+            <div
+              class="chemical-item"
+              style="background-color: #cc99ff"
+              onclick="selectChemical('cyanide')"
+            >
+              <div>☠️</div>
+              <div>Cyanide</div>
+            </div>
+            <div
+              class="chemical-item"
+              style="background-color: #99ccff"
+              onclick="selectChemical('sulfide')"
+            >
+              <div>🪨</div>
+              <div>Sulfide</div>
             </div>
           </div>
 
           <div class="mixing-area" id="mixingArea">
-            Drag chemicals here to mix
+            Drag chemicals here or click to select
           </div>
 
           <div class="reaction-result" id="reactionResult">
-            Reaction result will appear here
+            <div class="reaction-icon">⚗️</div>
+            <div>Reaction result will appear here</div>
           </div>
 
           <div class="chemical-warning">
-            ⚠️ Never mix chemicals without proper knowledge and safety
-            equipment!
+            ⚠️ Never mix chemicals without proper knowledge, supervision, and
+            safety equipment! Always consult MSDS (Material Safety Data Sheets)
+            before working with chemicals.
           </div>
 
           <button onclick="resetMixing()">Reset Experiment</button>
@@ -562,6 +638,7 @@
     <audio id="wrongSound" src="wrong-47985 - Copy.mp3"></audio>
     <audio id="explosionSound" src="explosion-40585.mp3"></audio>
     <audio id="fizzSound" src="fizz-91102.mp3"></audio>
+    <audio id="bubbleSound" src="bubble-142194.mp3"></audio>
 
     <script>
       // Global variables to track if an answer has been selected
@@ -574,43 +651,130 @@
       let selectedChemicals = [];
       const chemicalReactions = {
         "acid-base": {
-          result: "Neutralization reaction! Salt and water are formed.",
+          result:
+            "Neutralization reaction! Salt and water are formed. This is generally safe when done carefully.",
           safe: true,
           effect: "fizz",
+          icon: "🧂",
         },
         "acid-oxidizer": {
-          result: "Dangerous reaction! Could produce toxic gases.",
+          result:
+            "Dangerous reaction! Could produce toxic chlorine gas or other hazardous products.",
           safe: false,
           effect: "danger",
+          icon: "☠️",
         },
         "acid-water": {
           result:
-            "Always add acid to water, not water to acid! This is safe if done correctly.",
+            "Always add acid to water, not water to acid! This is safe if done correctly to prevent splashing.",
           safe: true,
           effect: "safe",
+          icon: "⚠️",
         },
         "base-oxidizer": {
           result:
-            "Potentially dangerous reaction! Could produce heat and splattering.",
+            "Potentially dangerous reaction! Could produce heat and cause splattering of corrosive materials.",
           safe: false,
           effect: "danger",
+          icon: "🔥",
         },
         "base-water": {
           result:
-            "Dissolution reaction. Some bases dissolve exothermically in water.",
+            "Dissolution reaction. Some bases dissolve exothermically in water - add slowly with stirring.",
           safe: true,
           effect: "safe",
+          icon: "🌡️",
         },
         "oxidizer-water": {
           result:
-            "Generally safe, but some oxidizers react violently with water!",
+            "Generally safe, but some strong oxidizers react violently with water! Check compatibility first.",
           safe: false,
           effect: "danger",
+          icon: "💥",
         },
-        same: {
-          result: "Mixing the same chemicals just gives you more of the same.",
+        "acid-organic": {
+          result:
+            "Potential fire hazard! Some organic solvents can react dangerously with strong acids.",
+          safe: false,
+          effect: "danger",
+          icon: "🔥",
+        },
+        "base-organic": {
+          result:
+            "Reaction possible! Some organic compounds can saponify or react with strong bases.",
+          safe: false,
+          effect: "danger",
+          icon: "⚠️",
+        },
+        "oxidizer-organic": {
+          result:
+            "EXTREME FIRE HAZARD! Many organic materials combust violently with strong oxidizers.",
+          safe: false,
+          effect: "explosion",
+          icon: "💥",
+        },
+        "water-organic": {
+          result:
+            "Generally immiscible. Some organics may react with water over time (hydrolysis).",
           safe: true,
           effect: "safe",
+          icon: "🔍",
+        },
+        "acid-metal": {
+          result:
+            "Produces hydrogen gas! Highly flammable - keep away from ignition sources.",
+          safe: false,
+          effect: "fizz",
+          icon: "💨",
+        },
+        "base-metal": {
+          result:
+            "Some metals react with bases to produce hydrogen gas. Handle with caution.",
+          safe: false,
+          effect: "fizz",
+          icon: "💨",
+        },
+        "water-metal": {
+          result:
+            "Reactive metals like sodium explode on contact with water! EXTREME DANGER.",
+          safe: false,
+          effect: "explosion",
+          icon: "💥",
+        },
+        "acid-cyanide": {
+          result:
+            "PRODUCES DEADLY HYDROGEN CYANIDE GAS! Never mix acids with cyanide compounds.",
+          safe: false,
+          effect: "danger",
+          icon: "☠️",
+        },
+        "sulfide-acid": {
+          result:
+            "Produces toxic hydrogen sulfide gas! Smells like rotten eggs and is highly dangerous.",
+          safe: false,
+          effect: "danger",
+          icon: "☠️",
+        },
+        "cyanide-oxidizer": {
+          result:
+            "Can produce highly toxic cyanogen gas. Avoid mixing these compounds.",
+          safe: false,
+          effect: "danger",
+          icon: "⚠️",
+        },
+        same: {
+          result:
+            "Mixing the same chemicals just gives you more of the same. No reaction occurs.",
+          safe: true,
+          effect: "safe",
+          icon: "➡️",
+        },
+        default: {
+          result:
+            "No significant reaction occurs between these chemicals under normal conditions.",
+          safe: true,
+          effect: "safe",
+          icon: "✅",
         },
       };
 
@@ -1131,10 +1295,11 @@
         showSymbol();
       }
 
-      // Chemical Mixing Game
+      // Chemical Mixing Game Functions
       function selectChemical(chemical) {
         if (selectedChemicals.length < 2) {
           selectedChemicals.push(chemical);
+          updateChemicalSelection();
           updateMixingArea();
 
           if (selectedChemicals.length === 2) {
@@ -1143,10 +1308,29 @@
         }
       }
 
+      function updateChemicalSelection() {
+        // Remove any existing selection highlights
+        document.querySelectorAll(".chemical-item").forEach((item) => {
+          item.classList.remove("selected");
+        });
+
+        // Highlight selected chemicals if any
+        if (selectedChemicals.length > 0) {
+          selectedChemicals.forEach((chem) => {
+            const chemicalElement = document.querySelector(
+              `.chemical-item[onclick="selectChemical('${chem}')"]`
+            );
+            if (chemicalElement) {
+              chemicalElement.classList.add("selected");
+            }
+          });
+        }
+      }
+
       function updateMixingArea() {
         const mixingArea = document.getElementById("mixingArea");
         if (selectedChemicals.length === 0) {
-          mixingArea.innerHTML = "Drag chemicals here to mix";
+          mixingArea.innerHTML = "Drag chemicals here or click to select";
         } else {
           mixingArea.innerHTML = selectedChemicals
             .map((chem) => {
@@ -1159,6 +1343,16 @@
                   return "🧪 Oxidizer";
                 case "water":
                   return "💧 Water";
+                case "organic":
+                  return "🪔 Organic Solvent";
+                case "metal":
+                  return "⚙️ Reactive Metal";
+                case "cyanide":
+                  return "☠️ Cyanide";
+                case "sulfide":
+                  return "🪨 Sulfide";
+                default:
+                  return chem;
               }
             })
             .join(" + ");
@@ -1168,77 +1362,60 @@
       function mixChemicals() {
         const reactionResult = document.getElementById("reactionResult");
         const [chem1, chem2] = selectedChemicals;
-        let reactionKey;
+        let reactionKey = "default";
 
+        // Check if mixing the same chemicals
         if (chem1 === chem2) {
           reactionKey = "same";
-        } else if (
-          (chem1 === "acid" && chem2 === "base") ||
-          (chem1 === "base" && chem2 === "acid")
-        ) {
-          reactionKey = "acid-base";
-        } else if (
-          (chem1 === "acid" && chem2 === "oxidizer") ||
-          (chem1 === "oxidizer" && chem2 === "acid")
-        ) {
-          reactionKey = "acid-oxidizer";
-        } else if (
-          (chem1 === "acid" && chem2 === "water") ||
-          (chem1 === "water" && chem2 === "acid")
-        ) {
-          reactionKey = "acid-water";
-        } else if (
-          (chem1 === "base" && chem2 === "oxidizer") ||
-          (chem1 === "oxidizer" && chem2 === "base")
-        ) {
-          reactionKey = "base-oxidizer";
-        } else if (
-          (chem1 === "base" && chem2 === "water") ||
-          (chem1 === "water" && chem2 === "base")
-        ) {
-          reactionKey = "base-water";
-        } else if (
-          (chem1 === "oxidizer" && chem2 === "water") ||
-          (chem1 === "water" && chem2 === "oxidizer")
-        ) {
-          reactionKey = "oxidizer-water";
+        } else {
+          // Create a consistent key regardless of order
+          const sortedChems = [chem1, chem2].sort().join("-");
+          reactionKey =
+            sortedChems in chemicalReactions ? sortedChems : "default";
         }
 
         const reaction = chemicalReactions[reactionKey];
 
         // Play appropriate sound
         if (reaction.effect === "danger") {
-          document.getElementById("explosionSound").play();
+          document.getElementById("wrongSound").play();
         } else if (reaction.effect === "fizz") {
           document.getElementById("fizzSound").play();
+        } else if (reaction.effect === "explosion") {
+          document.getElementById("explosionSound").play();
         } else {
           document.getElementById("correctSound").play();
         }
 
         // Display result with appropriate styling
-        reactionResult.textContent = reaction.result;
+        reactionResult.innerHTML = `
+          <div class="reaction-icon">${reaction.icon}</div>
+          <div>${reaction.result}</div>
+        `;
         reactionResult.className = "reaction-result";
 
         if (reaction.safe) {
           reactionResult.classList.add("reaction-safe");
         } else {
           reactionResult.classList.add("reaction-danger");
+        }
 
-          // Special case for particularly dangerous reactions
-          if (
-            reactionKey === "acid-oxidizer" ||
-            reactionKey === "base-oxidizer"
-          ) {
-            reactionResult.classList.add("reaction-explosion");
-          }
+        // Special case for particularly dangerous reactions
+        if (reaction.effect === "explosion") {
+          reactionResult.classList.add("reaction-explosion");
+        } else if (reaction.effect === "fizz") {
+          reactionResult.classList.add("reaction-fizz");
         }
       }
 
       function resetMixing() {
         selectedChemicals = [];
+        updateChemicalSelection();
         updateMixingArea();
-        document.getElementById("reactionResult").textContent =
-          "Reaction result will appear here";
+        document.getElementById("reactionResult").innerHTML = `
+          <div class="reaction-icon">⚗️</div>
+          <div>Reaction result will appear here</div>
+        `;
         document.getElementById("reactionResult").className = "reaction-result";
       }
 
