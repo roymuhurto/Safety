@@ -1159,36 +1159,36 @@
       const scenarios = [
         {
           scenario:
-            "You accidentally spill a small amount of chemical on your hand. What should you do?",
+            "🧪 You accidentally spill a small amount of chemical on your hand. What should you do?",
           options: [
-            "Wipe it on your lab coat",
-            "Rinse with water for 15 minutes",
-            "Ignore it",
-            "Ask a friend for help",
+            "🧥 Wipe it on your lab coat",
+            "🚿 Rinse with water for 15 minutes",
+            "🙈 Ignore it",
+            "🤷 Ask a friend for help",
           ],
           answer: 1,
-          imageText: "Chemical Spill",
+          imageText: "🧪 Chemical Spill",
         },
         {
           scenario:
-            "A beaker of water is boiling on a hot plate and starts to bubble over. What should you do?",
+            "💧 A beaker of water is boiling on a hot plate and starts to bubble over. What should you do?",
           options: [
-            "Turn off the hot plate",
-            "Move the beaker with your hands",
-            "Add cold water to cool it",
-            "Yell for help",
+            "🛑 Turn off the hot plate",
+            "🧤 Move the beaker with your hands",
+            "💧 Add cold water to cool it",
+            "🗣️ Yell for help",
           ],
           answer: 0,
-          imageText: "Boiling Over",
+          imageText: "💧 Boiling Over",
         },
         {
           scenario:
-            "You notice a small fire in a trash can. What should you do first?",
+            "🔥 You notice a small fire in a trash can. What should you do first?",
           options: [
-            "Throw water on it",
-            "Use a fire extinguisher",
-            "Tell the teacher immediately",
-            "Evacuate the room",
+            "💧 Throw water on it",
+            "🧯 Use a fire extinguisher",
+            "👩‍🏫 Tell the teacher immediately",
+            "🏃 Evacuate the room",
           ],
           answer: 2,
           imageText: "Fire Emergency",
@@ -1261,6 +1261,16 @@
         { rule: "Never work alone", icon: "👥", color: "#1565c0" },
         { rule: "Label all containers", icon: "🏷️", color: "#00796b" },
         { rule: "Dispose of waste properly", icon: "🗑️", color: "#795548" },
+        {
+          rule: "No loud talking or playing in the laboratory.",
+          icon: "🔊",
+          color: "#795548",
+        },
+        {
+          rule: "Take extra precautions when handling chemicals.",
+          icon: "🧪",
+          color: "#795548",
+        },
       ];
 
       function showRules() {
@@ -1425,10 +1435,10 @@
         {
           symbol: "Flammable",
           options: [
-            "Catches fire easily",
-            "Poisonous if ingested",
-            "Causes skin burns",
-            "May explode if heated",
+            "🔥 Catches fire easily",
+            "☠️ Poisonous if ingested",
+            "🩹 Causes skin burns",
+            "💥 May explode if heated",
           ],
           answer: 0,
           imageText: "🔥 Flammable",
@@ -1436,21 +1446,21 @@
         {
           symbol: "Corrosive",
           options: [
-            "Causes skin burns",
-            "Catches fire easily",
-            "Harmful to environment",
-            "May explode if heated",
+            "🩹 Causes skin burns",
+            "🔥 Catches fire easily",
+            "💧 Harmful to environment",
+            "💥 May explode if heated",
           ],
           answer: 0,
           imageText: "💧 Corrosive",
         },
         {
-          symbol: "Toxic",
+          symbol: "☠️ Toxic",
           options: [
-            "Poisonous if ingested",
-            "Causes skin irritation",
-            "Radioactive",
-            "Harmful to environment",
+            "☠️ Poisonous if ingested",
+            "☠️ Causes skin irritation",
+            "☢️ Radioactive",
+            "🌍 Harmful to environment",
           ],
           answer: 0,
           imageText: "☠️ Toxic",
