@@ -55,6 +55,7 @@
         flex-direction: column;
         z-index: 9999;
         animation: popIn 0.8s ease;
+        transition: opacity 0.6s ease; /* fade out */
       }
 
       @keyframes popIn {
@@ -120,8 +121,6 @@
         margin-top: 10px;
         text-shadow: 1px 1px 0 #fff;
         padding: 1px;
-        padding-top: 10px;
-        margin-bottom: 10px;
       }
 
       .screen {
@@ -196,13 +195,41 @@
       .card {
         background: var(--card-bg);
         border-radius: 20px;
-        padding: 15px;
-        margin: 50px auto;
-        max-width: 95%;
+        padding: 20px 20px 25px; /* extra padding to avoid overlap with close button */
+        margin: 20px auto;
+        max-width: 90%;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         border: 2px solid var(--accent);
         min-height: auto;
         height: auto;
+        position: relative;
+        overflow: hidden; /* ensures close button doesn’t float outside rounded edges */
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: #ff4d4d;
+        border: none;
+        color: #fff;
+        font-size: 1.4rem; /* slightly smaller, cleaner cross */
+        font-weight: normal; /* makes ❌ thinner */
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        display: flex; /* perfect centering */
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+        transition: background 0.25s ease, transform 0.2s ease;
+        z-index: 10;
+      }
+
+      .close-btn:hover {
+        background: #e60000;
+        transform: scale(1.08);
       }
 
       @media (min-height: 800px) and (min-width: 768px) {
@@ -417,7 +444,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        width: 90%;
       }
 
       .reaction-safe {
@@ -454,8 +481,6 @@
         margin-bottom: 10px;
         font-weight: bold;
         font-size: clamp(1rem, 3vw, 1.2rem);
-        padding-bottom: 10px;
-        padding-top: 1px;
       }
 
       @keyframes pulse {
@@ -617,6 +642,8 @@
 
     <div id="quizScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
+
         <h2>Science Safety Quiz</h2>
         <div id="quizQ"></div>
         <div id="quizOptions"></div>
@@ -629,6 +656,7 @@
 
     <div id="equipmentScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
         <h2>Lab Equipment</h2>
         <div id="equipmentList"></div>
       </div>
@@ -636,6 +664,7 @@
 
     <div id="scenarioScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
         <h2>Safety Scenarios</h2>
         <div id="scenarioText"></div>
         <div class="scenario-image" id="scenarioImage">Scenario Image</div>
@@ -649,6 +678,7 @@
 
     <div id="rulesScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
         <h2>Science Safety Rules</h2>
         <div class="rules-container" id="rulesList">
           <!-- Rules will be populated by JavaScript -->
@@ -658,6 +688,7 @@
 
     <div id="emergencyScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
         <h2>Emergency Procedures</h2>
         <div id="emergencyQuestion"></div>
         <div id="emergencyOptions"></div>
@@ -670,6 +701,7 @@
 
     <div id="whsScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
         <h2>Hazard Symbols</h2>
         <div id="symbolImage" class="scenario-image">Hazard Symbol</div>
         <div id="symbolOptions"></div>
@@ -683,6 +715,8 @@
     <!-- Chemical Mixing Game -->
     <div id="chemicalScreen" class="screen fade-in">
       <div class="card">
+        <button class="close-btn" aria-label="Close">&times;</button>
+
         <h2>Chemical Mixing Safety</h2>
         <div class="chemical-game">
           <p class="chemical-instructions">Select two chemicals to mix!</p>
@@ -801,6 +835,17 @@
     <audio id="bubbleSound" src="bubble-142194.mp3"></audio>
 
     <script>
+      // 🔹 Hide loading screen after page fully loads
+      window.addEventListener("load", () => {
+        const loadingScreen = document.getElementById("loadingScreen");
+        if (loadingScreen) {
+          loadingScreen.style.opacity = "0";
+          setTimeout(() => {
+            loadingScreen.style.display = "none";
+          }, 600); // matches fade duration
+        }
+      });
+
       // Global variables to track if an answer has been selected
       let quizAnswered = false;
       let scenarioAnswered = false;
@@ -1609,6 +1654,36 @@
             focused.click();
           }
         }
+      });
+
+      // Make all close buttons functional
+      document.querySelectorAll(".close-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const screen = btn.closest(".screen"); // find parent screen
+          if (screen) {
+            screen.classList.remove("active"); // hide screen
+          }
+        });
+      });
+
+      // Close button logic
+      document.querySelectorAll(".close-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const screen = btn.closest(".screen");
+          if (screen) {
+            screen.classList.remove("active");
+          }
+        });
+      });
+
+      // Overlay click logic
+      document.querySelectorAll(".screen").forEach((screen) => {
+        screen.addEventListener("click", (event) => {
+          // Only close if the click is on the overlay (not inside the card)
+          if (event.target === screen) {
+            screen.classList.remove("active");
+          }
+        });
       });
     </script>
   </body>
